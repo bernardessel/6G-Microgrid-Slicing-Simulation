@@ -22,7 +22,7 @@ This project simulates a dynamic resource allocation algorithm that utilizes 6G 
 * Performance Analysis: Evaluate the system based on End-to-End Latency, Packet Success Rate, and Throughput.
 
 ---
-##📂 Repository Structure
+📂## Repository Structure
 
 ```text
 6G-Microgrid-Slicing/
