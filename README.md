@@ -15,7 +15,7 @@ This project simulates a dynamic resource allocation algorithm that utilizes 6G 
 
 ---
 
-##  Key Objectives
+##Key Objectives
 * Model a 6G Radio Access Network (RAN): Operating at 28 GHz (mmWave) with 120 kHz SCS.
 * Simulate Network Slicing: Create distinct logical networks for Protection (URLLC) and Metering (mMTC) on shared infrastructure.
 * Dynamic Orchestration: Implement an algorithm that dynamically reallocates bandwidth during "Grid Fault" events.
