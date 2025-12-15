@@ -15,7 +15,7 @@ This project simulates a dynamic resource allocation algorithm that utilizes 6G 
 
 ---
 
-##Key Objectives
+Key Objectives
 * Model a 6G Radio Access Network (RAN): Operating at 28 GHz (mmWave) with 120 kHz SCS.
 * Simulate Network Slicing: Create distinct logical networks for Protection (URLLC) and Metering (mMTC) on shared infrastructure.
 * Dynamic Orchestration: Implement an algorithm that dynamically reallocates bandwidth during "Grid Fault" events.
@@ -64,17 +64,17 @@ Phase 4: Results (Latency & Throughput Graphs).
 Phase 5: Final Thesis & IEEE Publication.
 
 
-## Key Features
-* **Topology:** Custom Mininet topology simulating a Smart Meter, Protection Relay, and Control Server.
-* **Controller:** Ryu SDN Controller with custom OpenFlow 1.3 logic.
-* **Slicing Algorithm:**
-    * **Slice 1 (Critical):** High-priority queue for Protection Relay (94 Mbps).
-    * **Slice 2 (Non-Critical):** Throttled queue for Smart Meters (28 Mbps).
-* **Protocol:** ARP handling and IPv4 traffic isolation.
+Key Features
+Topology:Custom Mininet topology simulating a Smart Meter, Protection Relay, and Control Server.
+Controller: Ryu SDN Controller with custom OpenFlow 1.3 logic.
+Slicing Algorithm:
+    Slice 1 (Critical): High-priority queue for Protection Relay (94 Mbps).
+    Slice 2 (Non-Critical):Throttled queue for Smart Meters (28 Mbps).
+Protocol: ARP handling and IPv4 traffic isolation.
 
-## Results
-* **Critical Slice Throughput:** 94.0 Mbits/sec (Unrestricted)
-* **Non-Critical Slice Throughput:** 28.3 Mbits/sec (Capped)
+ Results
+Critical Slice Throughput:94.0 Mbits/sec (Unrestricted)
+Non-Critical Slice Throughput:28.3 Mbits/sec (Capped)
 
 
 ✍️ Author
