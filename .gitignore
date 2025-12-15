@@ -1,19 +1,14 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Virtual environments
-venv/
+# Ignore Virtual Env
 ryu_env/
+venv/
+env/
 
-# Ryu framework (installed separately)
-ryu/
+# Ignore Python Cache
+pycache/
+*.pyc
 
-# Build & logs
-build/
-dist/
+# Ignore Logs and Captures
 *.log
-
-# OS
-.DS_Store
+*.pcap
+*.mn
+*.sh

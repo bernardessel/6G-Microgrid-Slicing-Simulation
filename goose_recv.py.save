@@ -1,0 +1,19 @@
+import sys
+import time
+from scapy.all import sniff,Raw,IP
+
+def handle_packet(pkt):
+	#Check if packet has Raw data(payload)
+	if Raw in pkt:
+	#Decode broadly
+	payload = pkt[Raw].load.decode('utf-8',errors='ignore')
+
+
+	#DEBUG: Print what we see!
+	print(f"DEBUG RAW PAYLOAD:{payload}")
+
+	if"Timestamp:" in payload:
+	 try:
+	  data_parts = payload.split("Timestamp:")
+	 #The timestamp is the second part
+	  sent_time_str = data_parts[
