@@ -5,7 +5,7 @@
 ![Domain](https://img.shields.io/badge/Domain-Telecoms%20%7C%20Smart%20Grid-green)
 
 ## 📌 Project Overview
-This repository contains the MATLAB simulation framework and research documentation for a 6G-enabled Network Slicing architecture designed specifically for Microgrid environments.
+This repository contains the MATLAB simulation framework and research documentation for a 6G-enabled Network Slicing architecture designed specifically for Microgrid environments.It also simulates a 6G-enabled microgrid communication network using Software-Defined Networking (SDN). It implements a Network Slicing algorithm to prioritize critical grid protection signals over routine smart meter data.
 
 As Microgrids integrate more Distributed Energy Resources (DERs), they require communication networks that can handle two conflicting demands:
 1.  Ultra-Reliability & Low Latency (URLLC): For critical protection relays and fault isolation (Target: <1ms latency).
@@ -62,6 +62,20 @@ Phase 3: Dynamic Slicing Algorithm (The "Scheduler").
 Phase 4: Results (Latency & Throughput Graphs).
 
 Phase 5: Final Thesis & IEEE Publication.
+
+
+## Key Features
+* **Topology:** Custom Mininet topology simulating a Smart Meter, Protection Relay, and Control Server.
+* **Controller:** Ryu SDN Controller with custom OpenFlow 1.3 logic.
+* **Slicing Algorithm:**
+    * **Slice 1 (Critical):** High-priority queue for Protection Relay (94 Mbps).
+    * **Slice 2 (Non-Critical):** Throttled queue for Smart Meters (28 Mbps).
+* **Protocol:** ARP handling and IPv4 traffic isolation.
+
+## Results
+* **Critical Slice Throughput:** 94.0 Mbits/sec (Unrestricted)
+* **Non-Critical Slice Throughput:** 28.3 Mbits/sec (Capped)
+
 
 ✍️ Author
 Bernard Kobina Forson Essel Research and Teaching Assistant,Department of Telecommunications Engineering,KNUST | Network Slicing & Smart Grid Researcher
