@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+ryu_env/
+
+# Ryu framework (installed separately)
+ryu/
+
+# Build & logs
+build/
+dist/
+*.log
+
+# OS
+.DS_Store
