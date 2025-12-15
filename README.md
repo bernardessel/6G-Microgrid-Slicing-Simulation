@@ -1,82 +1,191 @@
 # 6G-Ready Network Slicing for Microgrid Resilience
 
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
-![Language](https://img.shields.io/badge/Language-MATLAB-blue)
-![Domain](https://img.shields.io/badge/Domain-Telecoms%20%7C%20Smart%20Grid-green)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen)
+![Language](https://img.shields.io/badge/Language-Python%203-blue)
+![Platform](https://img.shields.io/badge/Platform-Mininet%20%7C%20Ryu%20SDN-orange)
+![Domain](https://img.shields.io/badge/Domain-Telecoms%20%7C%20Smart%20Grid-purple)
+
+---
 
 ## 📌 Project Overview
-This repository contains the MATLAB simulation framework and research documentation for a 6G-enabled Network Slicing architecture designed specifically for Microgrid environments.It also simulates a 6G-enabled microgrid communication network using Software-Defined Networking (SDN). It implements a Network Slicing algorithm to prioritize critical grid protection signals over routine smart meter data.
 
-As Microgrids integrate more Distributed Energy Resources (DERs), they require communication networks that can handle two conflicting demands:
-1.  Ultra-Reliability & Low Latency (URLLC): For critical protection relays and fault isolation (Target: <1ms latency).
-2.  Massive Machine Type Communications (mMTC): For high-density smart metering and sensor data (Target: High connection density).
+This repository presents a **6G-ready SDN-based Network Slicing framework** for enhancing **communication resilience in Smart Microgrid environments**.
 
-This project simulates a dynamic resource allocation algorithm that utilizes 6G capabilities to prioritize critical grid traffic during fault events, ensuring grid stability.
+As Microgrids integrate increasing numbers of Distributed Energy Resources (DERs), heterogeneous communication requirements arise:
+
+1. **Ultra-Reliable Low-Latency Communications (URLLC)**  
+   Required for protection relays, fault isolation, and real-time control  
+   *(Target latency < 1 ms)*
+
+2. **Massive Machine-Type Communications (mMTC)**  
+   Required for smart meters and high-density sensor networks
+
+To address these conflicting demands, this project applies **Software-Defined Networking (SDN)** using a **Ryu OpenFlow 1.3 controller** to implement **logical network slices** over shared physical infrastructure.
+
+---
+
+## 🚀 Key Features
+
+- Microgrid network emulation using **Mininet**
+- Custom **SDN Controller** implemented in Python (Ryu)
+- **Network Slicing Algorithm**
+  - **Slice 1 (Critical):** Protection Relays → High-priority queue (unrestricted)
+  - **Slice 2 (Non-Critical):** Smart Meters → Throttled queue
+- Traffic classification via ARP handling and IPv4-based slicing
+- Research-grade, reproducible simulation framework
 
 ---
 
-Key Objectives
-* Model a 6G Radio Access Network (RAN): Operating at 28 GHz (mmWave) with 120 kHz SCS.
-* Simulate Network Slicing: Create distinct logical networks for Protection (URLLC) and Metering (mMTC) on shared infrastructure.
-* Dynamic Orchestration: Implement an algorithm that dynamically reallocates bandwidth during "Grid Fault" events.
-* Performance Analysis: Evaluate the system based on End-to-End Latency, Packet Success Rate, and Throughput.
+## 📊 Performance Evaluation
+
+Throughput was evaluated using **iperf** under congestion conditions.
+
+| Slice | Device Type | Policy Applied | Throughput | Result |
+|------|------------|---------------|------------|--------|
+| Slice 1 | Protection Relay | Priority Queue (Q0) | **94.0 Mbit/s** | ✅ Guaranteed |
+| Slice 2 | Smart Meter | Throttled Queue (Q1) | **28.3 Mbit/s** | ⚠️ Limited |
+
+> **Conclusion:**  
+> The slicing algorithm successfully isolated critical protection traffic, ensuring near-full link utilization while restricting non-critical metering data.
 
 ---
-📂  Repository Structure
+
+## 📂 Repository Structure
 
 ```text
-6G-Microgrid-Slicing/
-├── Docs/                  # Thesis drafts, diagrams, and presentation slides
-│   ├── System_Architecture.pdf
-│   └── Problem_Statement.md
-├── src/                   # MATLAB Source Code
-│   ├── config_parameters.m    # System constants (Bandwidth, Frequency, TTI)
-│   ├── channel_model.m        # (Upcoming) Signal-to-Noise Ratio & Path Loss models
-│   ├── scheduler_logic.m      # (Upcoming) The slicing algorithm
-│   └── main_simulation.m      # (Upcoming) The main execution loop
-├── results/               # Generated graphs and plots
-│   └── latency_vs_load.jpg
-└── README.md              # Project Documentation
+6G-Microgrid-Slicing-Simulation/
+├── controllers/
+│   └── my_slicer.py          # Ryu SDN network slicing controller
+├── topology/
+│   └── microgrid_topo.py     # Mininet microgrid topology
+├── docs/
+│   └── Architecture_Diagram.png
+├── .gitignore
+└── README.md
+````
 
-🛠️ How to Run
-Clone this repository:
+> **Note:**
+> The Ryu framework itself is installed as a dependency and is **not included** in this repository.
 
-Bash
+---
 
-git clone [https://github.com/YourUsername/6G-Microgrid-Slicing.git](https://github.com/YourUsername/6G-Microgrid-Slicing.git)
-Open MATLAB.
+## 🛠️ How to Run the Simulation
 
-Navigate to the src folder.
+### 1️⃣ Prerequisites
 
-Run config_parameters.m to load the system environment.
+* **Operating System:** Ubuntu 20.04+ (Linux recommended)
+* **Software Dependencies:**
 
-(Upcoming) Run main_simulation.m to execute the traffic model and generate plots.
+  * Python 3
+  * Mininet
+  * Ryu SDN Controller
+  * Open vSwitch
+
+Install required tools:
+
+```bash
+sudo apt update
+sudo apt install -y mininet openvswitch-switch
+pip install ryu
+```
+
+---
+
+### 2️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/bernardessel/6G-Microgrid-Slicing-Simulation.git
+cd 6G-Microgrid-Slicing-Simulation
+```
+
+---
+
+### 3️⃣ Start the SDN Controller (Terminal 1)
+
+**Controller file:**
+
+```
+controllers/my_slicer.py
+```
+
+Run from the repository root:
+
+```bash
+ryu-manager controllers/my_slicer.py
+```
+
+Expected output:
+
+```text
+--- SLICER APP INITIALIZED CORRECTLY ---
+```
+
+---
+
+### 4️⃣ Start the Microgrid Network (Terminal 2)
+
+**Topology file:**
+
+```
+topology/microgrid_topo.py
+```
+
+```bash
+sudo mn -c
+sudo python3 topology/microgrid_topo.py
+```
+
+---
+
+### 5️⃣ Validate Operation (Mininet CLI)
+
+#### Connectivity Test
+
+```bash
+pingall
+```
+
+Expected: **0% packet loss**
+
+#### Bandwidth Evaluation
+
+```bash
+# Start server
+h_server iperf -s &
+
+# Smart Meter (throttled slice)
+h_meter iperf -c h_server -t 10
+
+# Protection Relay (high-priority slice)
+h_relay iperf -c h_server -t 10
+```
+
+---
 
 ## 📅 Roadmap
-Phase 1: Problem Statement & System Parameters.
 
-Phase 2: Channel Model (Path Loss & Fading).
+* [1] Problem Definition & Microgrid Modeling
+* [2] Mininet Topology Design
+* [3] SDN Network Slicing Algorithm (Ryu)
+* [4] Performance Evaluation (QoS & Throughput)
+* [ 5] AI/ML-based Dynamic Slice Adaptation *(Future Work)*
 
-Phase 3: Dynamic Slicing Algorithm (The "Scheduler").
+---
 
-Phase 4: Results (Latency & Throughput Graphs).
+## ✍️ Author
 
-Phase 5: Final Thesis & IEEE Publication.
+**Bernard Kobina Forson Essel**
+Research & Teaching Assistant
+Department of Telecommunications Engineering, KNUST
 
+**Research Interests:**
+SDN • Network Slicing • Smart Grids • 5G/6G Systems
 
-Key Features
-Topology:Custom Mininet topology simulating a Smart Meter, Protection Relay, and Control Server.
-Controller: Ryu SDN Controller with custom OpenFlow 1.3 logic.
-Slicing Algorithm:
-    Slice 1 (Critical): High-priority queue for Protection Relay (94 Mbps).
-    Slice 2 (Non-Critical):Throttled queue for Smart Meters (28 Mbps).
-Protocol: ARP handling and IPv4 traffic isolation.
+---
 
- Results
-Critical Slice Throughput:94.0 Mbits/sec (Unrestricted)
-Non-Critical Slice Throughput:28.3 Mbits/sec (Capped)
+## 📜 License
 
+This project is released for **academic and research purposes**.
 
-✍️ Author
-Bernard Kobina Forson Essel Research and Teaching Assistant,Department of Telecommunications Engineering,KNUST | Network Slicing & Smart Grid Researcher
+````
 
